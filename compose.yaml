@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4566:4566' # LocalStack endpoint
+
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - ./init-bucket.sh:/etc/localstack/init/ready.d/init-bucket.sh
+      - '/var/run/docker.sock:/var/run/docker.sock'
