@@ -1,5 +1,6 @@
 package de.eemkeen;
 
+import de.eemkeen.model.User;
 import de.eemkeen.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,15 @@ public class MicrostreamApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void ListUserOnStartup() {
+
+        printUsers();
+        // add new
+        userRepository.add(User.builder().name("New User!").build());
+        printUsers();
+
+    }
+
+    private void printUsers() {
         userRepository.getAll().
                 forEach(System.out::println);
     }
