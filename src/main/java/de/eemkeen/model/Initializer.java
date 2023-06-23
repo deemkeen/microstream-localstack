@@ -1,7 +1,5 @@
-package de.eemkeen;
+package de.eemkeen.model;
 
-import de.eemkeen.model.Root;
-import de.eemkeen.model.User;
 import one.microstream.integrations.spring.boot.types.config.StorageManagerInitializer;
 import one.microstream.storage.types.StorageManager;
 import org.springframework.stereotype.Component;
@@ -19,19 +17,10 @@ public class Initializer implements StorageManagerInitializer {
     Root root = (Root) storageManager.root();
     // Init 'database' with some data
     if (root.getUsers().isEmpty()) {
-      init(root);
       // We have made changes outside of the normal way (the repositories) that have automatic
-      // storage through @Store.
+      // storage through @Storage.
       // We store the root using an Eager Storer since we need to store all info anyway.
       storageManager.createEagerStorer().store(root);
     }
-  }
-
-  public void init(Root root) {
-    User johnDoe = User.builder().name("John").build();
-    User janeDoe = User.builder().name("Jane").build();
-
-    root.addUser(johnDoe);
-    root.addUser(janeDoe);
   }
 }

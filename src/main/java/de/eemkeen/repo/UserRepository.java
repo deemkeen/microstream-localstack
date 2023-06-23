@@ -1,12 +1,11 @@
 package de.eemkeen.repo;
 
-import java.util.List;
-import java.util.Optional;
-
 import de.eemkeen.exception.UserAlreadyExistsException;
 import de.eemkeen.exception.UserNotFoundException;
 import de.eemkeen.model.Root;
 import de.eemkeen.model.User;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -46,9 +45,7 @@ public class UserRepository {
     return updatedUser;
   }
 
-  public void removeById(String id){
+  public void removeById(String id) {
     getById(id).ifPresent(root::removeUser);
   }
-
-  
 }

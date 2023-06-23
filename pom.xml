@@ -8,14 +8,15 @@
         <version>3.1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>microstream</artifactId>
+    <groupId>de.eemkeen</groupId>
+    <artifactId>microstream-localstack</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>microstream</name>
-    <description>microstream</description>
+    <name>microstream-localstack</name>
+    <description>Spring Boot example with Microstream and Localstack S3</description>
     <properties>
         <java.version>17</java.version>
         <microstream-version>08.01.00-MS-GA</microstream-version>
+        <javafaker.version>1.0.2</javafaker.version>
     </properties>
     <dependencies>
         <dependency>
@@ -23,12 +24,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
@@ -55,6 +51,11 @@
             <groupId>one.microstream</groupId>
             <artifactId>microstream-afs-aws-s3</artifactId>
             <version>${microstream-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
         </dependency>
     </dependencies>
 
