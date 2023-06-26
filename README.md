@@ -1,6 +1,6 @@
 # Spring Boot Example with MicroStream and LocalStack S3 Simulator
 
-This repository contains a simple example of integrating MicroStream and LocalStack with a Spring Boot 3 application. MicroStream is a lightweight, in-memory persistence library, and LocalStack provides a local environment for running AWS cloud services.
+This repository contains a simple example of integrating MicroStream and LocalStack with a Spring Boot 3 application. [MicroStream](https://github.com/microstream-one/microstream) is a lightweight, in-memory persistence library, and [LocalStack](https://github.com/localstack/localstack) provides a local environment for running AWS cloud services.
 
 ## Prerequisites
 
