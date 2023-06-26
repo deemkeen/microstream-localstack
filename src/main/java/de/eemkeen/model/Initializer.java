@@ -1,10 +1,12 @@
 package de.eemkeen.model;
 
+import lombok.extern.slf4j.Slf4j;
 import one.microstream.integrations.spring.boot.types.config.StorageManagerInitializer;
 import one.microstream.storage.types.StorageManager;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class Initializer implements StorageManagerInitializer {
 
   @Override
@@ -17,7 +19,7 @@ public class Initializer implements StorageManagerInitializer {
     Root root = (Root) storageManager.root();
     // Init 'database' with some data
     if (root.getUsers().isEmpty()) {
-      // We have made changes outside of the normal way (the repositories) that have automatic
+      // We have made changes outside the normal way (the repositories) that have automatic
       // storage through @Storage.
       // We store the root using an Eager Storer since we need to store all info anyway.
       storageManager.createEagerStorer().store(root);

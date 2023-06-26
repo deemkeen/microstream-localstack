@@ -51,7 +51,7 @@ public class Config {
     return BlobStoreFileSystem.New(S3Connector.Caching(s3Client));
   }
 
-  @Bean("internal")
+  @Bean
   public EmbeddedStorageManager getStorageManager(BlobStoreFileSystem fileSystem) {
     final var foundation =
         EmbeddedStorageFoundation.New()

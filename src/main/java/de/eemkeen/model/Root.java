@@ -5,14 +5,11 @@ import java.util.List;
 import one.microstream.integrations.spring.boot.types.Storage;
 import one.microstream.storage.types.StorageManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 @Storage
 public class Root {
 
-  @Autowired
-  @Qualifier("internal")
-  private transient StorageManager storageManager;
+  @Autowired private transient StorageManager storageManager;
 
   private final List<User> users = new ArrayList<>();
 
