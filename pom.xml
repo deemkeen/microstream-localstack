@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <microstream-version>08.01.00-MS-GA</microstream-version>
         <javafaker.version>1.0.2</javafaker.version>
+        <jetty-client.version>11.0.15</jetty-client.version>
     </properties>
     <dependencies>
         <dependency>
@@ -55,6 +56,23 @@
             <artifactId>javafaker</artifactId>
             <version>${javafaker.version}</version>
         </dependency>
+        <!-- Websocket -->
+        <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-jetty-client</artifactId>
+            <version>${jetty-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.http2</groupId>
+            <artifactId>http2-client</artifactId>
+            <version>${jetty-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.http2</groupId>
+            <artifactId>http2-http-client-transport</artifactId>
+            <version>${jetty-client.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

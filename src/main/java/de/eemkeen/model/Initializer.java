@@ -18,7 +18,7 @@ public class Initializer implements StorageManagerInitializer {
 
     Root root = (Root) storageManager.root();
     // Init 'database' with some data
-    if (root.getUsers().isEmpty()) {
+    if (root.getEvents().isEmpty()) {
       // We have made changes outside the normal way (the repositories) that have automatic
       // storage through @Storage.
       // We store the root using an Eager Storer since we need to store all info anyway.

@@ -1,7 +1,8 @@
 package de.eemkeen.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 import one.microstream.integrations.spring.boot.types.Storage;
 import one.microstream.storage.types.StorageManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,30 +12,30 @@ public class Root {
 
   @Autowired private transient StorageManager storageManager;
 
-  private final List<User> users = new ArrayList<>();
+  private final Set<BaseEvent> events = new HashSet<>();
 
-  public List<User> getUsers() {
-    return new ArrayList<>(users);
+  public Set<BaseEvent> getEvents() {
+    return new HashSet<>(events);
   }
 
-  public User addUser(User user) {
-    users.add(user);
-    storageManager.store(users);
-    return user;
+  public BaseEvent addEvent(BaseEvent event) {
+    events.add(event);
+    storageManager.store(events);
+    return event;
   }
 
   /**
-   * Since the User instance is already part of the User Collection, we just need to make it is
-   * stored externally.
+   * Since the BaseEvent instance is already part of the BaseEvent Collection, we just need to make
+   * it is stored externally.
    *
-   * @param user
+   * @param event
    */
-  public void updateUser(User user) {
-    storageManager.store(user);
+  public void updateEvent(BaseEvent event) {
+    storageManager.store(event);
   }
 
-  public void removeUser(User user) {
-    users.remove(user);
-    storageManager.store(users);
+  public void removeEvent(BaseEvent event) {
+    events.remove(event);
+    storageManager.store(events);
   }
 }
