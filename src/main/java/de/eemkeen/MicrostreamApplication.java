@@ -25,7 +25,6 @@ public class MicrostreamApplication {
 
   private final ClientEndPoint clientEndPoint;
 
-  private final EventRepository eventRepository;
   private final int sessionId = (new Random().nextInt(99) + 100);
 
   public static void main(String[] args) {
@@ -34,9 +33,6 @@ public class MicrostreamApplication {
 
   @EventListener(ApplicationReadyEvent.class)
   public void getEventsOnStartup() throws Exception {
-
-    int size = eventRepository.getAll().size();
-    log.info("Collection size: {}", size);
 
     // Use a standard, HTTP/1.1, HttpClient.
     HttpClient httpClient = new HttpClient();

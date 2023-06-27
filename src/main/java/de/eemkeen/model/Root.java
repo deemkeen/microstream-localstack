@@ -2,8 +2,8 @@ package de.eemkeen.model;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import one.microstream.integrations.spring.boot.types.Storage;
+import one.microstream.reference.Lazy;
 import one.microstream.storage.types.StorageManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,30 +12,26 @@ public class Root {
 
   @Autowired private transient StorageManager storageManager;
 
-  private final Set<BaseEvent> events = new HashSet<>();
+  private final EventContainer eventContainer = new EventContainer();
 
   public Set<BaseEvent> getEvents() {
-    return new HashSet<>(events);
+    return new HashSet<>(Lazy.get(eventContainer.getEvents()));
   }
 
-  public BaseEvent addEvent(BaseEvent event) {
-    events.add(event);
-    storageManager.store(events);
+  public EventContainer getContainer(){
+    return eventContainer;
+  }
+
+  public BaseEvent addEvent(final BaseEvent event) {
+    Set<BaseEvent> baseEvents = Lazy.get(eventContainer.getEvents());
+    baseEvents.add(event);
+    storageManager.store(baseEvents);
     return event;
   }
 
-  /**
-   * Since the BaseEvent instance is already part of the BaseEvent Collection, we just need to make
-   * it is stored externally.
-   *
-   * @param event
-   */
-  public void updateEvent(BaseEvent event) {
-    storageManager.store(event);
-  }
-
-  public void removeEvent(BaseEvent event) {
-    events.remove(event);
-    storageManager.store(events);
+  public void removeEvent(final BaseEvent event) {
+    Set<BaseEvent> baseEvents = Lazy.get(eventContainer.getEvents());
+    baseEvents.remove(event);
+    storageManager.store(baseEvents);
   }
 }

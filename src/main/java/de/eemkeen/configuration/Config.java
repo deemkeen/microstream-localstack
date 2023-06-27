@@ -7,6 +7,7 @@ import one.microstream.afs.blobstore.types.BlobStoreFileSystem;
 import one.microstream.integrations.spring.boot.types.MicroStreamConfiguration;
 import one.microstream.integrations.spring.boot.types.config.MicrostreamConfigurationProperties;
 import one.microstream.integrations.spring.boot.types.config.StorageManagerFactory;
+import one.microstream.persistence.binary.jdk8.types.BinaryHandlersJDK8;
 import one.microstream.reflect.ClassLoaderProvider;
 import one.microstream.storage.embedded.types.EmbeddedStorageFoundation;
 import one.microstream.storage.embedded.types.EmbeddedStorageManager;
@@ -70,12 +71,12 @@ public class Config {
                                 Integer.highestOneBit(
                                     Runtime.getRuntime().availableProcessors() - 1))))
                     .createConfiguration());
-
+    foundation.onConnectionFoundation(BinaryHandlersJDK8::registerJDK8TypeHandlers);
     // handle changing class definitions at runtime
     foundation.onConnectionFoundation(
-        connectionFoundation ->
-            connectionFoundation.setClassLoaderProvider(
-                ClassLoaderProvider.New(Thread.currentThread().getContextClassLoader())));
+            connectionFoundation ->
+                    connectionFoundation.setClassLoaderProvider(
+                            ClassLoaderProvider.New(Thread.currentThread().getContextClassLoader())));
     return foundation.createEmbeddedStorageManager().start();
   }
 }

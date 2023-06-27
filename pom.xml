@@ -51,6 +51,12 @@
             <artifactId>microstream-afs-aws-s3</artifactId>
             <version>${microstream-version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>one.microstream</groupId>
+            <artifactId>microstream-persistence-binary-jdk8</artifactId>
+            <version>${microstream-version}</version>
+        </dependency>
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>

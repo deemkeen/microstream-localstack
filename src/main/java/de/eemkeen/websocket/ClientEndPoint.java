@@ -30,20 +30,21 @@ public class ClientEndPoint extends WebSocketAdapter implements WebSocketPingPon
   @Override
   public void onWebSocketConnect(Session sess) {
     super.onWebSocketConnect(sess);
+    log.info("Saved events: {}", eventRepository.size());
     log.info("Endpoint connected: {}", sess);
   }
 
   @Override
   public void onWebSocketText(String message) {
     super.onWebSocketText(message);
-    log.info("Received TEXT message: {}", message);
+    log.debug("Received TEXT message: {}", message);
 
     if (message.contains("\"EVENT\"")) {
       try {
         JsonNode jsonNode = mapper.readTree(message);
         JsonNode baseEventNode = jsonNode.get(2);
         BaseEvent baseEvent = mapper.treeToValue(baseEventNode, BaseEvent.class);
-        log.info(String.valueOf(baseEvent));
+        log.info(baseEvent.getId());
         eventRepository.add(baseEvent);
       } catch (JsonProcessingException e) {
         log.error("Mapping error!", e);
@@ -81,7 +82,7 @@ public class ClientEndPoint extends WebSocketAdapter implements WebSocketPingPon
   @Override
   public void onWebSocketPing(ByteBuffer payload) {
     try {
-      log.info("Recieved a ping from server, sending pong back!");
+      log.info("Received a ping from server, sending pong back!");
       getRemote().sendPong(payload);
     } catch (IOException e) {
       log.error("An exception occurred while processing a ping message : {}", e.getMessage());

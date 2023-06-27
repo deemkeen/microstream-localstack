@@ -1,12 +1,12 @@
 package de.eemkeen.repo;
 
-import de.eemkeen.exception.EventAlreadyExistsException;
 import de.eemkeen.model.BaseEvent;
 import de.eemkeen.model.Root;
 import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import one.microstream.reference.Lazy;
 import org.springframework.stereotype.Repository;
 
 @Slf4j
@@ -20,11 +20,15 @@ public class EventRepository {
     return root.getEvents();
   }
 
-  public Optional<BaseEvent> getById(String id) {
+  public Optional<BaseEvent> getById(final String id) {
     return root.getEvents().stream().filter(e -> e.getId().equals(id)).findAny();
   }
 
-  public BaseEvent add(BaseEvent event) {
+  public Optional<BaseEvent> getByPubkey(final String pubkey) {
+    return root.getEvents().stream().filter(e -> e.getPubkey().equals(pubkey)).findAny();
+  }
+
+  public BaseEvent add(final BaseEvent event) {
     BaseEvent result;
     Optional<BaseEvent> byId = getById(event.getId());
     if (byId.isEmpty()) {
@@ -36,7 +40,11 @@ public class EventRepository {
     return result;
   }
 
-  public void removeById(String id) {
+  public void removeById(final String id) {
     getById(id).ifPresent(root::removeEvent);
+  }
+
+  public int size() {
+    return root.getEvents().size();
   }
 }
