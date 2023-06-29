@@ -1,36 +1,26 @@
 package de.eemkeen.websocket;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.eemkeen.model.BaseEvent;
-import de.eemkeen.repo.EventRepository;
+import de.eemkeen.handler.PersistEventHandler;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.websocket.api.*;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ClientEndPoint extends WebSocketAdapter implements WebSocketPingPongListener {
+
+  private final PersistEventHandler persistEventHandler;
   private final CountDownLatch closureLatch = new CountDownLatch(1);
-
-  private final ObjectMapper mapper = new ObjectMapper();
-  private final EventRepository eventRepository;
-
-  public ClientEndPoint(EventRepository eventRepository) {
-    this.eventRepository = eventRepository;
-    this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-  }
 
   @Override
   public void onWebSocketConnect(Session sess) {
     super.onWebSocketConnect(sess);
-    log.info("Saved events: {}", eventRepository.size());
     log.info("Endpoint connected: {}", sess);
   }
 
@@ -40,15 +30,7 @@ public class ClientEndPoint extends WebSocketAdapter implements WebSocketPingPon
     log.debug("Received TEXT message: {}", message);
 
     if (message.contains("\"EVENT\"")) {
-      try {
-        JsonNode jsonNode = mapper.readTree(message);
-        JsonNode baseEventNode = jsonNode.get(2);
-        BaseEvent baseEvent = mapper.treeToValue(baseEventNode, BaseEvent.class);
-        log.info(baseEvent.getId());
-        eventRepository.add(baseEvent);
-      } catch (JsonProcessingException e) {
-        log.error("Mapping error!", e);
-      }
+      persistEventHandler.handle(message);
     }
 
     if ("close".equalsIgnoreCase(message)) {

@@ -6,9 +6,11 @@ import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.springframework.stereotype.Component;
 
 @WebSocket
 @Slf4j
+@Component
 public class SendEndPoint {
   @OnWebSocketMessage
   public void onText(Session session, String text) {
