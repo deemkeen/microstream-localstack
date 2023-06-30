@@ -1,3 +1,4 @@
 package de.eemkeen.exception;
 
-public class EventAlreadyExistsException extends RuntimeException {}
+public class EventAlreadyExistsException extends RuntimeException {
+}

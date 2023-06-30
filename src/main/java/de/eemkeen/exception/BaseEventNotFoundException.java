@@ -1,3 +1,4 @@
 package de.eemkeen.exception;
 
-public class BaseEventNotFoundException extends RuntimeException {}
+public class BaseEventNotFoundException extends RuntimeException {
+}

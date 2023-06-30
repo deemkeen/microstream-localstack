@@ -1,5 +1,5 @@
 package de.eemkeen.handler;
 
-public interface MessageHandler {
-  void handle(String message);
+public interface MessageHandler<T> {
+    void handle(T message);
 }
